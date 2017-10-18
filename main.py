@@ -37,9 +37,43 @@ def pos_c (pos):
 
 # Board Methods
 
-def board_find_groups(board):
-	# TO DO
-	return "To be implemented"
+def board_find_groups(board):	#falta garantir que não estou nos cantos e que posso andar
+
+	#Vai adicionando ao vector de resultados
+	#result.extend(tuple(pos));
+
+	#Verifica posicao a cima
+	#posAux = make_pos( (pos_l(pos)-1), pos_c(pos))
+	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+	
+
+	#if(colorAux == color) and (posAux not in result):
+		#result = find_groups(board, posAux, color, result)
+
+	#Verifica posicao a baixo
+	#posAux = make_pos( (pos_l(pos)+1), pos_c(pos))
+	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+
+	#if (colorAux == color) and (posAux not in result):
+		#result = find_groups(board, posAux, color, result)
+	
+	#Verifica posicao a esquerda
+	#posAux = make_pos(pos_l(pos), (pos_c(pos)-1))
+	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+
+	#if (colorAux == color) and (posAux not in result):
+		#result = find_groups(board, posAux, color, result)
+	
+	#Verifica posicao a direita
+	#posAux = make_pos(pos_l(pos), (pos_c(pos)+1))
+	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+
+	#if (colorAux == color) and (posAux not in result):
+		#result = find_groups(board, posAux, color, result)
+
+	#return result
+	pass
+
 
 def board_remove_group(board, group):
 
