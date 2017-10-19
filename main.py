@@ -35,6 +35,83 @@ def pos_c (pos):
 
 
 
+
+
+
+
+
+
+
+
+
+
+# Problem definition ( AI aproach )
+class same_game(Problem):
+    """
+    Models a Same Game problem as a satisfaction problem.
+    A solution cannot have pieces left on the board.
+    """ 
+ 
+# Doesn't work on an empty board
+    def __init__(self, board):
+
+        # Creates a 'goal' state.
+        # The goal state has a board with no pieces left and the problem's board
+        nr_lines = len(board)
+        nr_colums = len(board[0])
+
+        goal = []
+        entry = [get_no_color()]
+
+        for i in range(nr_lines):
+            new = []
+            for j in range(nr_colums):
+                new.append(entry)
+            goal.append(new)
+
+	self.initial = board
+        self.goal = goal
+	
+    def actions(self, state):
+        pass
+    
+    def result(self, state, action):
+        pass
+    
+    def goal_test(self, state): 
+        pass
+    
+    def path_cost(self, c, state1, action, state2):
+        pass
+    
+    def h(self, node): 
+        """Needed for informed search."""
+        pass
+
+# Same Game state definition 
+class sg_state(object):
+
+    # Each state has a board
+    def __init__(self, b):
+        self.board = b
+
+    def __lt__(self, state):
+        return True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Board Methods
 
 def board_find_groups(board):	#falta garantir que não estou nos cantos e que posso andar
