@@ -73,20 +73,37 @@ class same_game(Problem):
         self.goal = goal
 	
     def actions(self, state):
-        pass
+        allowd_groups = []
+        gp = board_find_groups(state.board)
+
+        for i in range(len(gp)):
+            if(len(gp[i]) > 1):
+                allowd_groups.append(gp[i])
+
+        return allowd_groups
+
+
     
     def result(self, state, action):
-        pass
+        final_board = board_remove_group(state.board, action)
+
+        new_state = sg_state(final_board)
+
+        return new_state
+
+
+
     
-    def goal_test(self, state): 
-        pass
-    
-    def path_cost(self, c, state1, action, state2):
-        pass
+
     
     def h(self, node): 
         """Needed for informed search."""
-        pass
+        group = board_find_groups(node.state.board)
+
+        return len(group)
+
+
+
 
 # Same Game state definition 
 class sg_state(object):
