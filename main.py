@@ -140,7 +140,7 @@ def board_find_groups(board):   #falta garantir que não estou nos cantos e que 
                             if(gp1[0] not in gp2):
                                 gp1.append(pos)
                                 gp1 += gp2
-                                allGroups = remo(gp2, allGroups)
+                                allGroups = remove_group_in_Groups(gp2, allGroups)
         
                             else:
                                 gp1.append(pos)
@@ -198,7 +198,7 @@ def find_elem_in_group(pos, allGroups):
 			return gp
 
 
-def remo(gp, allGroups):
+def remove_group_in_Groups(gp, allGroups):
 	#remove grupo
 	for i in range(len(allGroups)):
 		if allGroups[i] == gp:
