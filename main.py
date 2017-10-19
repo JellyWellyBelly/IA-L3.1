@@ -38,41 +38,94 @@ def pos_c (pos):
 # Board Methods
 
 def board_find_groups(board):	#falta garantir que não estou nos cantos e que posso andar
-
-	#Vai adicionando ao vector de resultados
-	#result.extend(tuple(pos));
-
-	#Verifica posicao a cima
-	#posAux = make_pos( (pos_l(pos)-1), pos_c(pos))
-	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+	# Gets the board size
+	nr_lines = len(board)
+	nr_colums = len(board[0])
+	allGroups = []
 	
 
-	#if(colorAux == color) and (posAux not in result):
-		#result = find_groups(board, posAux, color, result)
+	for i in range(nr_lines):
 
-	#Verifica posicao a baixo
-	#posAux = make_pos( (pos_l(pos)+1), pos_c(pos))
-	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+		for j in range(nr_colums):
+			pos = make_pos(i,j)
 
-	#if (colorAux == color) and (posAux not in result):
-		#result = find_groups(board, posAux, color, result)
+			if (i-1 >= 0) and (j-1 >= 0):
+
+				#cor cima e esq iguais
+				if(board[i][j] == board[i][j-1]) and (board[i][j] == board[i-1][j]):
+					gp1 = find_elem_in_group( make_pos(i, j-1), allGroups)
+					gp2 = find_elem_in_group( make_pos(i-1, j), allGroups)
+
+					if(pos not in gp1) and (pos not in gp2):
+						
+						if(gp1[0] not in gp2):
+							gp1.append(pos)
+							gp1 += gp2
+							allGroups = remo(gp2, allGroups)
 	
-	#Verifica posicao a esquerda
-	#posAux = make_pos(pos_l(pos), (pos_c(pos)-1))
-	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
+						else:
+							gp1.append(pos)
+				
+				#cor cima igual
+				elif(board[i][j] == board[i-1][j]) and (j >= 0):
+					gp = find_elem_in_group( make_pos(i-1, j), allGroups)
+					gp.append(pos)
 
-	#if (colorAux == color) and (posAux not in result):
-		#result = find_groups(board, posAux, color, result)
+				#cor esquerda igual
+				elif(board[i][j] == board[i][j-1]) and (i >= 0):
+					gp = find_elem_in_group( make_pos(i, j-1), allGroups)
+					gp.append(pos)
+
+				#nao eh igual nem a esquerda nem cima
+				else:
+					allGroups.append([pos])
+
+			#quando estamos na linha zero
+			elif(i-1 < 0) and (j-1 >= 0):
+
+				#cor esquerda igual
+				if(board[i][j] == board[i][j-1]):
+					gp = find_elem_in_group( make_pos(i, j-1), allGroups)
+					gp.append(pos)
+
+				else:
+					allGroups.append([pos])
+
+			#quando estamos na coluna zero
+			elif (i-1 >= 0) and (j-1 < 0):
+				
+				#cor cima igual
+				if(board[i][j] == board[i-1][j]):
+					gp = find_elem_in_group( make_pos(i-1, j), allGroups)
+					gp.append(make_pos(i,j))
+				
+				else:
+					allGroups.append([pos])
+
+			#quando nao eh nehuma das anteriores
+			else:
+				allGroups.append([pos])
+
+	return allGroups
+
+
+
+
+
+def find_elem_in_group(pos, allGroups):
+	#procura um grupo no total de grupos
+	for gp in allGroups:
+		if(pos in gp):
+			return gp
+
+
+def remo(gp, allGroups):
+	#remove grupo
+	for i in range(len(allGroups)):
+		if allGroups[i] == gp:
+			return allGroups[:i] + allGroups[i+1:]
+
 	
-	#Verifica posicao a direita
-	#posAux = make_pos(pos_l(pos), (pos_c(pos)+1))
-	#colorAux = board[pos_l(posAux)][pos_c(posAux)]
-
-	#if (colorAux == color) and (posAux not in result):
-		#result = find_groups(board, posAux, color, result)
-
-	#return result
-	pass
 
 
 def board_remove_group(board, group):
