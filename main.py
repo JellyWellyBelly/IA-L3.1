@@ -2,7 +2,7 @@
 # Miguel Viegas 	nr: 84747
 # Grupo 6
 
-import search
+from search import Problem
 from utils import print_table
 from copy import deepcopy
 
@@ -114,76 +114,78 @@ class sg_state(object):
 
 # Board Methods
 
-def board_find_groups(board):	#falta garantir que não estou nos cantos e que posso andar
-	# Gets the board size
-	nr_lines = len(board)
-	nr_colums = len(board[0])
-	allGroups = []
-	
+def board_find_groups(board):   #falta garantir que não estou nos cantos e que posso andar
+    # Gets the board size
+    nr_lines = len(board)
+    nr_colums = len(board[0])
+    allGroups = []
+    
 
-	for i in range(nr_lines):
+    for i in range(nr_lines):
 
-		for j in range(nr_colums):
-			pos = make_pos(i,j)
+        for j in range(nr_colums):
 
-			if (i-1 >= 0) and (j-1 >= 0):
+            if not ( no_color(board[i][j]) ):
+                pos = make_pos(i,j)
 
-				#cor cima e esq iguais
-				if(board[i][j] == board[i][j-1]) and (board[i][j] == board[i-1][j]):
-					gp1 = find_elem_in_group( make_pos(i, j-1), allGroups)
-					gp2 = find_elem_in_group( make_pos(i-1, j), allGroups)
+                if (i-1 >= 0) and (j-1 >= 0):
 
-					if(pos not in gp1) and (pos not in gp2):
-						
-						if(gp1[0] not in gp2):
-							gp1.append(pos)
-							gp1 += gp2
-							allGroups = remo(gp2, allGroups)
-	
-						else:
-							gp1.append(pos)
-				
-				#cor cima igual
-				elif(board[i][j] == board[i-1][j]) and (j >= 0):
-					gp = find_elem_in_group( make_pos(i-1, j), allGroups)
-					gp.append(pos)
+                    #cor cima e esq iguais
+                    if(board[i][j] == board[i][j-1]) and (board[i][j] == board[i-1][j]):
+                        gp1 = find_elem_in_group( make_pos(i, j-1), allGroups)
+                        gp2 = find_elem_in_group( make_pos(i-1, j), allGroups)
 
-				#cor esquerda igual
-				elif(board[i][j] == board[i][j-1]) and (i >= 0):
-					gp = find_elem_in_group( make_pos(i, j-1), allGroups)
-					gp.append(pos)
+                        if(pos not in gp1) and (pos not in gp2):
+                            
+                            if(gp1[0] not in gp2):
+                                gp1.append(pos)
+                                gp1 += gp2
+                                allGroups = remo(gp2, allGroups)
+        
+                            else:
+                                gp1.append(pos)
+                    
+                    #cor cima igual
+                    elif(board[i][j] == board[i-1][j]) and (j >= 0):
+                        gp = find_elem_in_group( make_pos(i-1, j), allGroups)
+                        gp.append(pos)
 
-				#nao eh igual nem a esquerda nem cima
-				else:
-					allGroups.append([pos])
+                    #cor esquerda igual
+                    elif(board[i][j] == board[i][j-1]) and (i >= 0):
+                        gp = find_elem_in_group( make_pos(i, j-1), allGroups)
+                        gp.append(pos)
 
-			#quando estamos na linha zero
-			elif(i-1 < 0) and (j-1 >= 0):
+                    #nao eh igual nem a esquerda nem cima
+                    else:
+                        allGroups.append([pos])
 
-				#cor esquerda igual
-				if(board[i][j] == board[i][j-1]):
-					gp = find_elem_in_group( make_pos(i, j-1), allGroups)
-					gp.append(pos)
+                #quando estamos na linha zero
+                elif(i-1 < 0) and (j-1 >= 0):
 
-				else:
-					allGroups.append([pos])
+                    #cor esquerda igual
+                    if(board[i][j] == board[i][j-1]):
+                        gp = find_elem_in_group( make_pos(i, j-1), allGroups)
+                        gp.append(pos)
 
-			#quando estamos na coluna zero
-			elif (i-1 >= 0) and (j-1 < 0):
-				
-				#cor cima igual
-				if(board[i][j] == board[i-1][j]):
-					gp = find_elem_in_group( make_pos(i-1, j), allGroups)
-					gp.append(make_pos(i,j))
-				
-				else:
-					allGroups.append([pos])
+                    else:
+                        allGroups.append([pos])
 
-			#quando nao eh nehuma das anteriores
-			else:
-				allGroups.append([pos])
+                #quando estamos na coluna zero
+                elif (i-1 >= 0) and (j-1 < 0):
+                    
+                    #cor cima igual
+                    if(board[i][j] == board[i-1][j]):
+                        gp = find_elem_in_group( make_pos(i-1, j), allGroups)
+                        gp.append(make_pos(i,j))
+                    
+                    else:
+                        allGroups.append([pos])
 
-	return allGroups
+                #quando nao eh nehuma das anteriores
+                else:
+                    allGroups.append([pos])
+
+    return allGroups
 
 
 
